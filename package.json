@@ -1,6 +1,6 @@
 {
   "name": "@textflyer/ui-theme",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "TextFlyer unified dark theme and focus styles (buildless CSS).",
   "license": "MIT",
   "type": "module",

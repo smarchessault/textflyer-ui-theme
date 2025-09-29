@@ -1,18 +1,21 @@
-/* @textflyer/ui-theme v0.3.1 — External Link Icons */
+/* @textflyer/ui-theme v0.3.2 — No-Blue Surfaces */
 
 /* ===== Tokens ===== */
 :root {
-  --tx-bg: #0b0c0f;
+  /* keep existing tokens; ensure these exist */
+  --tx-bg:#0e0f12;
+  --tx-panel:#111318;
+  --tx-card:#16191f;
+  --tx-border:rgba(255,255,255,0.08);
+  --tx-fg:#e8e8ec;
+  --tx-fg-muted:#a0a3ab;
+  --tx-accent:#0070f3; /* Vercel blue, for accents ONLY */
+  --tx-radius-sm:8px;
+  --tx-radius-md:12px;
+
   --tx-surface: #0f1115;
-  --tx-card: #111318;
-  --tx-border: rgba(255,255,255,0.08);
   --tx-border-strong: rgba(255,255,255,0.12);
-
-  --tx-fg: #e7e8ec;
-  --tx-fg-muted: #a9adbb;
   --tx-fg-subtle: #7f8496;
-
-  --tx-accent: #0070f3;
   --tx-accent-weak: color-mix(in oklab, var(--tx-accent) 14%, transparent);
 
   --tx-success: #22c55e;
@@ -191,3 +194,65 @@ pre{
 /* Utility spacing */
 .stack > * + *{ margin-top:var(--tx-space-3); }
 .inline-gap{ display:inline-flex; gap:var(--tx-space-2); }
+
+/* --- v0.3.2 No-Blue Surfaces --- */
+
+/* Cards & panels must never be accent-filled */
+.card, .Panel, [class*="card"], [class*="Card"], [class*="panel"]{
+  background:var(--tx-card)!important;
+  color:var(--tx-fg)!important;
+  border:1px solid var(--tx-border)!important;
+  border-radius:var(--tx-radius-md);
+  box-shadow:0 1px 0 rgba(0,0,0,0.35), 0 8px 24px rgba(0,0,0,0.35);
+}
+
+/* Buttons: blue only for PRIMARY; never for containers */
+button,.btn,.Button{
+  font-weight:500;
+  border-radius:10px;
+  transition:background .15s ease, border-color .15s ease, color .15s ease;
+}
+button.primary,.btn-primary,.Button--primary{
+  background:var(--tx-accent);
+  color:white;
+  border:1px solid color-mix(in oklab, var(--tx-accent) 70%, #000);
+}
+button.primary:hover,.btn-primary:hover,.Button--primary:hover{ filter:brightness(1.05) }
+button.ghost,.btn-ghost,.Button--ghost{
+  background:transparent;
+  color:var(--tx-fg);
+  border:1px solid var(--tx-border);
+}
+
+/* Sidebar: dark surface, visible hover/focus, no white-on-white */
+aside, .sidebar, nav[aria-label*="Side" i]{ background:var(--tx-panel); }
+aside a, .sidebar a, nav[aria-label*="Side" i] a{
+  color:var(--tx-fg-muted); text-decoration:none; border-radius:8px; padding:6px 10px; display:block;
+}
+aside a:hover, .sidebar a:hover, nav[aria-label*="Side" i] a:hover{
+  background:color-mix(in oklab, var(--tx-accent) 6%, transparent);
+  color:var(--tx-fg);
+}
+aside a:focus-visible, .sidebar a:focus-visible, nav[aria-label*="Side" i] a:focus-visible{
+  outline:2px solid var(--tx-accent); outline-offset:2px;
+  box-shadow:0 0 0 3px color-mix(in oklab, var(--tx-accent) 35%, transparent);
+  background:color-mix(in oklab, var(--tx-accent) 12%, transparent);
+}
+
+/* Command Palette highlight: subtle, not solid blue */
+[data-cmdk-root] [role="option"]:focus-visible{
+  background:color-mix(in oklab, var(--tx-accent) 12%, transparent);
+  outline:2px solid var(--tx-accent); outline-offset:2px; border-radius:8px;
+}
+
+/* Tables & badges keep neutral surfaces */
+table{ width:100%; border-collapse:collapse; }
+th,td{ padding:10px 12px; border-bottom:1px solid var(--tx-border); }
+.badge,[class*="badge"]{ border:1px solid var(--tx-border); background:transparent; color:var(--tx-fg); border-radius:999px; padding:2px 8px; }
+
+/* Prevent accidental blue fills on common classes */
+[class*="stat"], [class*="Summary"], [class*="KPI"]{
+  background:var(--tx-card)!important;
+}
+
+/* External link mask icon already present from 0.3.1 — keep it */
