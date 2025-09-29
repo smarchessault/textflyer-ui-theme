@@ -4,7 +4,7 @@
   "description": "TextFlyer unified dark theme and focus styles (buildless CSS).",
   "license": "MIT",
   "type": "module",
-  "files": ["styles/"],
+  "files": ["styles/", "README.md"],
   "exports": {
     ".": "./styles/theme-base.css",
     "./styles/theme-base.css": "./styles/theme-base.css"
