@@ -1,258 +1,170 @@
-/* @textflyer/ui-theme v0.3.2 — No-Blue Surfaces */
+/* TextFlyer UI Theme — v0.4.0 (Vercel match) */
 
-/* ===== Tokens ===== */
-:root {
-  /* keep existing tokens; ensure these exist */
-  --tx-bg:#0e0f12;
-  --tx-panel:#111318;
-  --tx-card:#16191f;
-  --tx-border:rgba(255,255,255,0.08);
-  --tx-fg:#e8e8ec;
-  --tx-fg-muted:#a0a3ab;
-  --tx-accent:#0070f3; /* Vercel blue, for accents ONLY */
-  --tx-radius-sm:8px;
-  --tx-radius-md:12px;
+/* ---------- Tokens ---------- */
+:root{
+  /* page + layers */
+  --tx-bg: #0e0f12;        /* page background (near-black) */
+  --tx-panel:#111317;      /* header/toolbar */
+  --tx-card:#16191f;       /* cards/panels */
+  --tx-surface:#0f1217;    /* inputs/controls */
+  --tx-border: rgba(255,255,255,0.08);
 
-  --tx-surface: #0f1115;
-  --tx-border-strong: rgba(255,255,255,0.12);
-  --tx-fg-subtle: #7f8496;
-  --tx-accent-weak: color-mix(in oklab, var(--tx-accent) 14%, transparent);
+  /* text */
+  --tx-fg:#e6e7ea;         /* primary text */
+  --tx-fg-muted:#a0a4ac;   /* secondary text */
 
-  --tx-success: #22c55e;
-  --tx-warning: #f59e0b;
-  --tx-danger:  #ef4444;
+  /* accent */
+  --tx-accent:#0070f3;     /* Vercel blue */
+  --tx-accent-weak: color-mix(in oklab, var(--tx-accent) 6%, transparent);
 
-  --tx-radius-xs: 6px;
+  /* radius + spacing + shadows */
   --tx-radius-sm: 8px;
   --tx-radius-md: 12px;
-  --tx-radius-lg: 16px;
-
-  /* spacing scale */
   --tx-space-1: 4px;
   --tx-space-2: 8px;
   --tx-space-3: 12px;
   --tx-space-4: 16px;
   --tx-space-5: 20px;
   --tx-space-6: 24px;
-
-  --tx-shadow-1: 0 1px 2px rgba(0,0,0,.25), 0 0 0 1px var(--tx-border);
-  --tx-shadow-2: 0 10px 30px rgba(0,0,0,.35), 0 0 0 1px var(--tx-border);
-  --tx-shadow-focus: 0 0 0 3px color-mix(in oklab, var(--tx-accent) 35%, transparent);
-
-  --tx-base: 15.5px;
-  --tx-line: 1.65;
-  --tx-h1: clamp(1.65rem, 2.7vw, 2.15rem);
-  --tx-h2: clamp(1.35rem, 2.2vw, 1.75rem);
-  --tx-h3: clamp(1.15rem, 1.8vw, 1.35rem);
-  --tx-maxw: 1100px;
-  --tx-pad: clamp(12px, 2.5vw, 24px);
-
-  --tx-focus-outline: 2px solid var(--tx-accent);
+  --tx-shadow-sm: 0 1px 0 rgba(0,0,0,0.6), 0 1px 12px rgba(0,0,0,0.35);
+  --tx-shadow-md: 0 1px 0 rgba(0,0,0,0.6), 0 6px 24px rgba(0,0,0,0.45);
 }
 
-/* ===== Base ===== */
-@supports (font-variation-settings: normal) {
-  @font-face { font-family: Inter; src: local("Inter"); font-display: swap; }
+@media (prefers-color-scheme: light){
+  :root{
+    /* keep same accent, slightly lighter neutrals for light mode */
+    --tx-bg:#ffffff;
+    --tx-panel:#f6f7f8;
+    --tx-card:#ffffff;
+    --tx-surface:#f9fafb;
+    --tx-fg:#111317;
+    --tx-fg-muted:#60646c;
+    --tx-border: rgba(0,0,0,0.08);
+  }
 }
-html{ color-scheme: dark; background: var(--tx-bg); }
+
+/* ---------- Page ---------- */
+html{ color-scheme: light dark; }
 body{
   margin:0;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  font-size:var(--tx-base); line-height:var(--tx-line); color:var(--tx-fg);
-  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-}
-main,.container,.page,#__next,#root{ display:block; }
-main,.page,.container{ margin:0 auto; max-width:var(--tx-maxw); padding:var(--tx-pad); }
-
-h1,h2,h3{ margin:0 0 var(--tx-space-3); color:var(--tx-fg); letter-spacing:-0.01em; }
-h1{ font-size:var(--tx-h1); font-weight:700; }
-h2{ font-size:var(--tx-h2); font-weight:650; }
-h3{ font-size:var(--tx-h3); font-weight:600; }
-p,li{ color:var(--tx-fg); }
-small,.muted{ color:var(--tx-fg-muted); }
-
-a{ color:var(--tx-accent); text-decoration:none; }
-a:hover{ text-decoration:underline; }
-
-/* External-link icon (CSS mask) */
-a[target="_blank"]{
-  position:relative; padding-right:18px;
-}
-a[target="_blank"]::after{
-  content:"";
-  position:absolute; right:0; top:50%; transform:translateY(-50%);
-  width:14px; height:14px; opacity:.9;
-  background: currentColor;
-  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h6v6"/><path d="M13 3L6 10"/><path d="M5 13H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/></svg>') no-repeat center / contain;
-          mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h6v6"/><path d="M13 3L6 10"/><path d="M5 13H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/></svg>') no-repeat center / contain;
+  background:var(--tx-bg);
+  color:var(--tx-fg);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===== Surfaces ===== */
-.app-shell,aside,nav,header,footer{ background:var(--tx-surface); border-right:1px solid var(--tx-border); }
-
-.card,[class*="Card"],[data-card]{
-  background:var(--tx-card);
-  border:1px solid var(--tx-border);
-  border-radius:var(--tx-radius-md);
-  box-shadow:var(--tx-shadow-1);
-  padding:var(--tx-space-4);
+main, .container, .page{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(12px, 3vw, 24px);
 }
-.card--elevated{ box-shadow:var(--tx-shadow-2); }
 
-.section-title{
-  font-size:var(--tx-h3);
-  color:var(--tx-fg-muted);
-  padding:var(--tx-space-2) 0;
+/* Header/toolbar like Vercel top bar */
+.header, .toolbar{
+  background:var(--tx-panel);
   border-bottom:1px solid var(--tx-border);
-  margin-bottom:var(--tx-space-3);
 }
 
-/* ===== Controls ===== */
-button,.btn,.Button,[role="button"]{
-  font:inherit; color:var(--tx-fg);
-  background:#141823; border:1px solid var(--tx-border);
-  border-radius:var(--tx-radius-sm);
-  padding:8px 12px; cursor:pointer;
-  transition:background .15s ease,border-color .15s ease,transform .02s ease;
-}
-button:hover,.btn:hover,.Button:hover{ border-color:var(--tx-border-strong); background:#162033; }
-button:active,.btn:active,.Button:active{ transform:translateY(1px); }
+/* ---------- Typography ---------- */
+h1{ font-weight: 700; letter-spacing:-0.02em; font-size: clamp(1.6rem, 2.8vw, 2.2rem); }
+h2{ font-weight: 650; letter-spacing:-0.015em; font-size: clamp(1.35rem, 2.2vw, 1.6rem); }
+h3{ font-weight: 600; letter-spacing:-0.01em; font-size: clamp(1.2rem, 1.8vw, 1.35rem); }
+p, li{ color:var(--tx-fg); }
 
-.btn-primary,.Button--primary,button.primary{
-  background:var(--tx-accent);
-  border-color:color-mix(in oklab,var(--tx-accent) 60%, black);
-  color:#fff;
-}
-.btn-primary:hover,.Button--primary:hover,button.primary:hover{
-  background:color-mix(in oklab,var(--tx-accent) 90%, white 0%);
+/* ---------- Cards & Panels (no blue surfaces ever) ---------- */
+.card, .panel, .box, [data-card], [class*="Card"], [class*="Panel"]{
+  background: var(--tx-card) !important;
+  color: var(--tx-fg) !important;
+  border: 1px solid var(--tx-border) !important;
+  border-radius: var(--tx-radius-md) !important;
+  box-shadow: var(--tx-shadow-sm);
 }
 
-/* Ghost / subtle buttons */
-.btn-ghost{ background:transparent; border-color:var(--tx-border); }
-.btn-ghost:hover{ background:rgba(255,255,255,0.03); }
-
-/* Inputs */
-input,select,textarea{
-  background:var(--tx-surface); color:var(--tx-fg);
-  border:1px solid var(--tx-border); border-radius:var(--tx-radius-sm);
-  padding:8px 10px; outline:none;
-}
-input::placeholder,textarea::placeholder{ color:var(--tx-fg-subtle); }
-input:focus,select:focus,textarea:focus{ border-color:var(--tx-accent); box-shadow:var(--tx-shadow-focus); }
-
-/* Pills / badges */
-.badge,.Tag,[data-badge]{
-  display:inline-flex; align-items:center; gap:6px; height:22px; padding:0 8px;
-  border-radius:999px; font-size:12px; color:var(--tx-fg);
-  border:1px solid var(--tx-border); background:rgba(255,255,255,0.03);
+/* "stat" tiles */
+.stat, .metric, .kpi{
+  background: var(--tx-card) !important;
+  border: 1px solid var(--tx-border) !important;
+  border-radius: var(--tx-radius-md);
+  padding: var(--tx-space-4) var(--tx-space-5);
 }
 
 /* Tables */
-table{ width:100%; border-collapse:collapse; }
-th,td{ padding:10px 12px; border-bottom:1px solid var(--tx-border); }
-th{ text-align:left; color:var(--tx-fg-muted); font-weight:500; }
-tbody tr:hover{ background:rgba(255,255,255,0.02); }
+table{ width:100%; border-collapse: collapse; }
+th, td{ padding: 10px 12px; border-bottom:1px solid var(--tx-border); }
+thead th{ background: color-mix(in oklab, #000 85%, var(--tx-card)); }
 
-/* Zebra option */
-.table--zebra tbody tr:nth-child(even){ background:rgba(255,255,255,0.015); }
-
-/* Code blocks */
-pre,code,kbd,samp{ font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; }
-pre{
-  white-space:pre-wrap; word-break:break-word; overflow-wrap:anywhere;
-  border-radius:var(--tx-radius-sm); padding:10px 12px;
-  background:rgba(127,127,127,0.08); border:1px solid var(--tx-border);
+/* Pills/Badges */
+.pill, .badge{
+  display:inline-flex; align-items:center; gap:6px;
+  padding: 4px 10px; border-radius: 999px;
+  background: transparent; border:1px solid var(--tx-border);
+  color: var(--tx-fg-muted);
 }
 
-/* Focus */
-:focus-visible{ outline:var(--tx-focus-outline); outline-offset:2px; }
+/* ---------- Buttons ---------- */
+.btn{ 
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding: 8px 14px; border-radius: var(--tx-radius-sm);
+  border:1px solid var(--tx-border); background: transparent; color: var(--tx-fg);
+  box-shadow: none; transition: transform .02s ease, background .12s ease, border-color .12s ease;
+}
+.btn:hover{ background: color-mix(in oklab, #000 92%, var(--tx-panel)); }
+.btn:active{ transform: translateY(1px); }
 
-/* Sidebar focus */
-:where(aside,.sidebar,nav[aria-label*="Side" i]) :is(a,button,[role="menuitem"],[tabindex]):focus-visible{
-  outline:var(--tx-focus-outline); outline-offset:2px; border-radius:var(--tx-radius-sm);
-  box-shadow:var(--tx-shadow-focus); background:var(--tx-accent-weak);
+.btn-primary{
+  background: var(--tx-accent); border-color: color-mix(in oklab, var(--tx-accent) 60%, #000);
+  color:#fff;
+}
+.btn-primary:hover{
+  background: color-mix(in oklab, var(--tx-accent) 88%, #000);
+}
+.btn-ghost{
+  background: transparent; border-color: var(--tx-border);
+}
+.btn-ghost:hover{
+  background: var(--tx-accent-weak);
 }
 
-/* Command palette */
-[data-cmdk-root]{
-  max-width:720px; background:var(--tx-surface);
-  border:1px solid var(--tx-border); border-radius:var(--tx-radius-lg);
-  box-shadow:0 20px 60px rgba(0,0,0,.45), 0 0 0 1px var(--tx-border);
-}
-[data-cmdk-root] [role="option"]{ border-bottom:1px solid var(--tx-border); }
-[data-cmdk-root] [role="option"]:focus-visible{
-  outline:var(--tx-focus-outline); outline-offset:2px; border-radius:var(--tx-radius-sm);
-  background:var(--tx-accent-weak);
+/* Inputs */
+input, select, textarea{
+  background: var(--tx-surface); color: var(--tx-fg);
+  border:1px solid var(--tx-border); border-radius: var(--tx-radius-sm);
+  padding: 8px 10px;
 }
 
-/* Scrollbars (WebKit + Firefox) */
-*{ scrollbar-width:thin; scrollbar-color: var(--tx-border) transparent; }
+/* ---------- Focus (keyboard) ---------- */
+:focus-visible{
+  outline:2px solid var(--tx-accent);
+  outline-offset:2px;
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--tx-accent) 30%, transparent);
+  border-radius: 8px;
+}
+
+/* ---------- External link icon (mask) ---------- */
+a[target="_blank"]{
+  padding-right: 18px; position:relative;
+}
+a[target="_blank"]::after{
+  content:""; position:absolute; right:2px; top:50%; transform: translateY(-50%);
+  width:14px; height:14px; opacity:.7;
+  background: currentColor;
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"/><path d="M5 5h5V3H3v7h2V5zm0 14h5v2H3v-7h2v5zm14-5h2v7h-7v-2h5v-5z"/></svg>') no-repeat 50% 50%;
+          mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"/><path d="M5 5h5V3H3v7h2V5zm0 14h5v2H3v-7h2v5zm14-5h2v7h-7v-2h5v-5z"/></svg>') no-repeat 50% 50%;
+}
+a[target="_blank"]:hover::after{ opacity:1; }
+
+/* ---------- Scrollbars ---------- */
+*{
+  scrollbar-width: thin; scrollbar-color: var(--tx-border) transparent;
+}
 *::-webkit-scrollbar{ height:10px; width:10px; }
-*::-webkit-scrollbar-thumb{ background:var(--tx-border); border-radius:999px; border:2px solid transparent; background-clip:padding-box; }
-*::-webkit-scrollbar-thumb:hover{ background:var(--tx-border-strong); }
+*::-webkit-scrollbar-track{ background: transparent; }
+*::-webkit-scrollbar-thumb{ background: var(--tx-border); border-radius: 999px; }
 
-/* Utility spacing */
-.stack > * + *{ margin-top:var(--tx-space-3); }
-.inline-gap{ display:inline-flex; gap:var(--tx-space-2); }
-
-/* --- v0.3.2 No-Blue Surfaces --- */
-
-/* Cards & panels must never be accent-filled */
-.card, .Panel, [class*="card"], [class*="Card"], [class*="panel"]{
-  background:var(--tx-card)!important;
-  color:var(--tx-fg)!important;
-  border:1px solid var(--tx-border)!important;
-  border-radius:var(--tx-radius-md);
-  box-shadow:0 1px 0 rgba(0,0,0,0.35), 0 8px 24px rgba(0,0,0,0.35);
+/* ---------- Hard guard: NEVER allow blue/white card fills ---------- */
+[class*="card"], [class*="Card"], [data-card]{
+  background: var(--tx-card) !important;
 }
-
-/* Buttons: blue only for PRIMARY; never for containers */
-button,.btn,.Button{
-  font-weight:500;
-  border-radius:10px;
-  transition:background .15s ease, border-color .15s ease, color .15s ease;
+.bg-blue-50, .bg-blue-100, .bg-blue-200, .bg-white {
+  background: var(--tx-card) !important;
 }
-button.primary,.btn-primary,.Button--primary{
-  background:var(--tx-accent);
-  color:white;
-  border:1px solid color-mix(in oklab, var(--tx-accent) 70%, #000);
-}
-button.primary:hover,.btn-primary:hover,.Button--primary:hover{ filter:brightness(1.05) }
-button.ghost,.btn-ghost,.Button--ghost{
-  background:transparent;
-  color:var(--tx-fg);
-  border:1px solid var(--tx-border);
-}
-
-/* Sidebar: dark surface, visible hover/focus, no white-on-white */
-aside, .sidebar, nav[aria-label*="Side" i]{ background:var(--tx-panel); }
-aside a, .sidebar a, nav[aria-label*="Side" i] a{
-  color:var(--tx-fg-muted); text-decoration:none; border-radius:8px; padding:6px 10px; display:block;
-}
-aside a:hover, .sidebar a:hover, nav[aria-label*="Side" i] a:hover{
-  background:color-mix(in oklab, var(--tx-accent) 6%, transparent);
-  color:var(--tx-fg);
-}
-aside a:focus-visible, .sidebar a:focus-visible, nav[aria-label*="Side" i] a:focus-visible{
-  outline:2px solid var(--tx-accent); outline-offset:2px;
-  box-shadow:0 0 0 3px color-mix(in oklab, var(--tx-accent) 35%, transparent);
-  background:color-mix(in oklab, var(--tx-accent) 12%, transparent);
-}
-
-/* Command Palette highlight: subtle, not solid blue */
-[data-cmdk-root] [role="option"]:focus-visible{
-  background:color-mix(in oklab, var(--tx-accent) 12%, transparent);
-  outline:2px solid var(--tx-accent); outline-offset:2px; border-radius:8px;
-}
-
-/* Tables & badges keep neutral surfaces */
-table{ width:100%; border-collapse:collapse; }
-th,td{ padding:10px 12px; border-bottom:1px solid var(--tx-border); }
-.badge,[class*="badge"]{ border:1px solid var(--tx-border); background:transparent; color:var(--tx-fg); border-radius:999px; padding:2px 8px; }
-
-/* Prevent accidental blue fills on common classes */
-[class*="stat"], [class*="Summary"], [class*="KPI"]{
-  background:var(--tx-card)!important;
-}
-
-/* External link mask icon already present from 0.3.1 — keep it */
