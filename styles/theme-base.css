@@ -1,4 +1,4 @@
-/* @textflyer/ui-theme v0.3.0 — Vercel Polish */
+/* @textflyer/ui-theme v0.3.1 — External Link Icons */
 
 /* ===== Tokens ===== */
 :root {
@@ -70,7 +70,19 @@ small,.muted{ color:var(--tx-fg-muted); }
 
 a{ color:var(--tx-accent); text-decoration:none; }
 a:hover{ text-decoration:underline; }
-a[target="_blank"]::after{ content:" ↗︎"; font-size:.9em; opacity:.85; }
+
+/* External-link icon (CSS mask) */
+a[target="_blank"]{
+  position:relative; padding-right:18px;
+}
+a[target="_blank"]::after{
+  content:"";
+  position:absolute; right:0; top:50%; transform:translateY(-50%);
+  width:14px; height:14px; opacity:.9;
+  background: currentColor;
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h6v6"/><path d="M13 3L6 10"/><path d="M5 13H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/></svg>') no-repeat center / contain;
+          mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h6v6"/><path d="M13 3L6 10"/><path d="M5 13H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/></svg>') no-repeat center / contain;
+}
 
 /* ===== Surfaces ===== */
 .app-shell,aside,nav,header,footer{ background:var(--tx-surface); border-right:1px solid var(--tx-border); }
