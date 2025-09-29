@@ -1,8 +1,12 @@
 {
   "name": "@textflyer/ui-theme",
   "version": "0.1.0",
-  "description": "TextFlyer shared CSS tokens and base dark theme",
+  "description": "TextFlyer unified dark theme and focus styles (buildless CSS).",
   "license": "MIT",
-  "main": "styles/theme-base.css",
-  "files": ["styles/*"]
+  "type": "module",
+  "files": ["styles/"],
+  "exports": {
+    ".": "./styles/theme-base.css",
+    "./styles/theme-base.css": "./styles/theme-base.css"
+  }
 }
