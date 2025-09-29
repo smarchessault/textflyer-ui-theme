@@ -1,0 +1,7 @@
+/* @textflyer/ui-theme — tokens */
+:root{
+  --tx-bg:#0e0f12; --tx-surface:#15171c; --tx-card:#1a1d23; --tx-border:#2a2f38;
+  --tx-fg:#e8e8ec; --tx-fg-muted:#a0a0af; --tx-accent:#5a93e6;
+  --tx-base:17px; --tx-line:1.65; --tx-maxw:980px; --tx-pad:clamp(12px,3vw,24px);
+}
+html{color-scheme:light dark}

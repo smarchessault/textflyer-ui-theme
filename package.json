@@ -1,0 +1,8 @@
+{
+  "name": "@textflyer/ui-theme",
+  "version": "0.1.0",
+  "description": "TextFlyer shared CSS tokens and base dark theme",
+  "license": "MIT",
+  "main": "styles/theme-base.css",
+  "files": ["styles/*"]
+}
