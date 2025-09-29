@@ -1,36 +1,41 @@
-/* @textflyer/ui-theme v0.2.0 — Vercel-like Dark Theme */
+/* @textflyer/ui-theme v0.3.0 — Vercel Polish */
 
-/* ===== Design Tokens ===== */
+/* ===== Tokens ===== */
 :root {
-  /* Palette (dark) */
-  --tx-bg: #0b0c0f;                 /* page background */
-  --tx-surface: #0f1115;            /* shells/sidebars/modals */
-  --tx-card: #111318;               /* cards & panels */
+  --tx-bg: #0b0c0f;
+  --tx-surface: #0f1115;
+  --tx-card: #111318;
   --tx-border: rgba(255,255,255,0.08);
   --tx-border-strong: rgba(255,255,255,0.12);
 
-  /* Text */
-  --tx-fg: #e7e8ec;                 /* primary text */
-  --tx-fg-muted: #a9adbb;           /* secondary */
-  --tx-fg-subtle: #7f8496;          /* tertiary */
+  --tx-fg: #e7e8ec;
+  --tx-fg-muted: #a9adbb;
+  --tx-fg-subtle: #7f8496;
 
-  /* Accent (Vercel-ish blue) */
   --tx-accent: #0070f3;
   --tx-accent-weak: color-mix(in oklab, var(--tx-accent) 14%, transparent);
 
-  /* Success / Warning / Danger (soft) */
-  --tx-success: #3cc56b;
-  --tx-warning: #f5a524;
+  --tx-success: #22c55e;
+  --tx-warning: #f59e0b;
   --tx-danger:  #ef4444;
 
-  /* Radius & Shadows */
+  --tx-radius-xs: 6px;
   --tx-radius-sm: 8px;
   --tx-radius-md: 12px;
   --tx-radius-lg: 16px;
-  --tx-shadow-1: 0 1px 2px rgba(0,0,0,0.25), 0 0 0 1px var(--tx-border);
+
+  /* spacing scale */
+  --tx-space-1: 4px;
+  --tx-space-2: 8px;
+  --tx-space-3: 12px;
+  --tx-space-4: 16px;
+  --tx-space-5: 20px;
+  --tx-space-6: 24px;
+
+  --tx-shadow-1: 0 1px 2px rgba(0,0,0,.25), 0 0 0 1px var(--tx-border);
+  --tx-shadow-2: 0 10px 30px rgba(0,0,0,.35), 0 0 0 1px var(--tx-border);
   --tx-shadow-focus: 0 0 0 3px color-mix(in oklab, var(--tx-accent) 35%, transparent);
 
-  /* Typography scale */
   --tx-base: 15.5px;
   --tx-line: 1.65;
   --tx-h1: clamp(1.65rem, 2.7vw, 2.15rem);
@@ -39,191 +44,138 @@
   --tx-maxw: 1100px;
   --tx-pad: clamp(12px, 2.5vw, 24px);
 
-  /* Focus outline */
   --tx-focus-outline: 2px solid var(--tx-accent);
 }
 
-/* ===== Base / Typography ===== */
+/* ===== Base ===== */
 @supports (font-variation-settings: normal) {
-  @font-face {
-    font-family: Inter;
-    src: local("Inter");
-    font-display: swap;
-  }
+  @font-face { font-family: Inter; src: local("Inter"); font-display: swap; }
 }
-
-html {
-  color-scheme: dark;
-  background: var(--tx-bg);
-}
-
-body {
-  margin: 0;
+html{ color-scheme: dark; background: var(--tx-bg); }
+body{
+  margin:0;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  font-size: var(--tx-base);
-  line-height: var(--tx-line);
-  color: var(--tx-fg);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-size:var(--tx-base); line-height:var(--tx-line); color:var(--tx-fg);
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
 }
+main,.container,.page,#__next,#root{ display:block; }
+main,.page,.container{ margin:0 auto; max-width:var(--tx-maxw); padding:var(--tx-pad); }
 
-main, .container, .page, #__next, #root { display: block; }
-main, .page, .container { margin: 0 auto; max-width: var(--tx-maxw); padding: var(--tx-pad); }
+h1,h2,h3{ margin:0 0 var(--tx-space-3); color:var(--tx-fg); letter-spacing:-0.01em; }
+h1{ font-size:var(--tx-h1); font-weight:700; }
+h2{ font-size:var(--tx-h2); font-weight:650; }
+h3{ font-size:var(--tx-h3); font-weight:600; }
+p,li{ color:var(--tx-fg); }
+small,.muted{ color:var(--tx-fg-muted); }
 
-h1, h2, h3 { margin: 0 0 0.6em; color: var(--tx-fg); letter-spacing: -0.01em; }
-h1 { font-size: var(--tx-h1); font-weight: 700; }
-h2 { font-size: var(--tx-h2); font-weight: 650; }
-h3 { font-size: var(--tx-h3); font-weight: 600; }
-p, li { color: var(--tx-fg); }
-small, .muted { color: var(--tx-fg-muted); }
+a{ color:var(--tx-accent); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+a[target="_blank"]::after{ content:" ↗︎"; font-size:.9em; opacity:.85; }
 
-a {
-  color: var(--tx-accent);
-  text-decoration: none;
+/* ===== Surfaces ===== */
+.app-shell,aside,nav,header,footer{ background:var(--tx-surface); border-right:1px solid var(--tx-border); }
+
+.card,[class*="Card"],[data-card]{
+  background:var(--tx-card);
+  border:1px solid var(--tx-border);
+  border-radius:var(--tx-radius-md);
+  box-shadow:var(--tx-shadow-1);
+  padding:var(--tx-space-4);
 }
-a:hover { text-decoration: underline; }
+.card--elevated{ box-shadow:var(--tx-shadow-2); }
 
-/* External-link "↗︎" marker (simple & readable) */
-a[target="_blank"]::after {
-  content: " ↗︎";
-  font-size: 0.9em;
-  opacity: 0.85;
-}
-
-/* ===== Layout Surfaces ===== */
-.app-shell, aside, nav, header, footer {
-  background: var(--tx-surface);
-  border-right: 1px solid var(--tx-border);
-}
-
-.card, [class*="Card"], [data-card] {
-  background: var(--tx-card);
-  border: 1px solid var(--tx-border);
-  border-radius: var(--tx-radius-md);
-  box-shadow: var(--tx-shadow-1);
-}
-
-/* Spaced section headers like Vercel */
-.section-title {
-  font-size: var(--tx-h3);
-  color: var(--tx-fg-muted);
-  text-transform: none;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--tx-border);
-  margin-bottom: 12px;
+.section-title{
+  font-size:var(--tx-h3);
+  color:var(--tx-fg-muted);
+  padding:var(--tx-space-2) 0;
+  border-bottom:1px solid var(--tx-border);
+  margin-bottom:var(--tx-space-3);
 }
 
 /* ===== Controls ===== */
-button, .btn, .Button, [role="button"] {
-  font: inherit;
-  color: var(--tx-fg);
-  background: #141823;
-  border: 1px solid var(--tx-border);
-  border-radius: var(--tx-radius-sm);
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: background .15s ease, border-color .15s ease, transform .02s ease;
+button,.btn,.Button,[role="button"]{
+  font:inherit; color:var(--tx-fg);
+  background:#141823; border:1px solid var(--tx-border);
+  border-radius:var(--tx-radius-sm);
+  padding:8px 12px; cursor:pointer;
+  transition:background .15s ease,border-color .15s ease,transform .02s ease;
 }
-button:hover, .btn:hover, .Button:hover {
-  border-color: var(--tx-border-strong);
-  background: #162033;
-}
-button:active, .btn:active, .Button:active { transform: translateY(1px); }
+button:hover,.btn:hover,.Button:hover{ border-color:var(--tx-border-strong); background:#162033; }
+button:active,.btn:active,.Button:active{ transform:translateY(1px); }
 
-/* Primary button (blue) */
-.btn-primary, .Button--primary, button.primary {
-  background: var(--tx-accent);
-  border-color: color-mix(in oklab, var(--tx-accent) 60%, black);
-  color: white;
+.btn-primary,.Button--primary,button.primary{
+  background:var(--tx-accent);
+  border-color:color-mix(in oklab,var(--tx-accent) 60%, black);
+  color:#fff;
 }
-.btn-primary:hover, .Button--primary:hover, button.primary:hover {
-  background: color-mix(in oklab, var(--tx-accent) 90%, white 0%);
+.btn-primary:hover,.Button--primary:hover,button.primary:hover{
+  background:color-mix(in oklab,var(--tx-accent) 90%, white 0%);
 }
 
-/* Subtle "ghost" button */
-.btn-ghost {
-  background: transparent;
-  border-color: var(--tx-border);
-}
-.btn-ghost:hover { background: rgba(255,255,255,0.03); }
+/* Ghost / subtle buttons */
+.btn-ghost{ background:transparent; border-color:var(--tx-border); }
+.btn-ghost:hover{ background:rgba(255,255,255,0.03); }
 
 /* Inputs */
-input, select, textarea {
-  background: var(--tx-surface);
-  color: var(--tx-fg);
-  border: 1px solid var(--tx-border);
-  border-radius: var(--tx-radius-sm);
-  padding: 8px 10px;
-  outline: none;
+input,select,textarea{
+  background:var(--tx-surface); color:var(--tx-fg);
+  border:1px solid var(--tx-border); border-radius:var(--tx-radius-sm);
+  padding:8px 10px; outline:none;
 }
-input::placeholder, textarea::placeholder { color: var(--tx-fg-subtle); }
-input:focus, select:focus, textarea:focus {
-  border-color: var(--tx-accent);
-  box-shadow: var(--tx-shadow-focus);
-}
+input::placeholder,textarea::placeholder{ color:var(--tx-fg-subtle); }
+input:focus,select:focus,textarea:focus{ border-color:var(--tx-accent); box-shadow:var(--tx-shadow-focus); }
 
-/* Badges / pills (like the small rounded tags) */
-.badge, .Tag, [data-badge] {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 22px;
-  padding: 0 8px;
-  border-radius: 999px;
-  font-size: 12px;
-  color: var(--tx-fg);
-  border: 1px solid var(--tx-border);
-  background: rgba(255,255,255,0.03);
+/* Pills / badges */
+.badge,.Tag,[data-badge]{
+  display:inline-flex; align-items:center; gap:6px; height:22px; padding:0 8px;
+  border-radius:999px; font-size:12px; color:var(--tx-fg);
+  border:1px solid var(--tx-border); background:rgba(255,255,255,0.03);
 }
 
 /* Tables */
-table { width: 100%; border-collapse: collapse; }
-th, td { padding: 10px 12px; border-bottom: 1px solid var(--tx-border); }
-th { text-align: left; color: var(--tx-fg-muted); font-weight: 500; }
+table{ width:100%; border-collapse:collapse; }
+th,td{ padding:10px 12px; border-bottom:1px solid var(--tx-border); }
+th{ text-align:left; color:var(--tx-fg-muted); font-weight:500; }
+tbody tr:hover{ background:rgba(255,255,255,0.02); }
+
+/* Zebra option */
+.table--zebra tbody tr:nth-child(even){ background:rgba(255,255,255,0.015); }
 
 /* Code blocks */
-pre, code, kbd, samp {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
-pre {
-  white-space: pre-wrap;
-  word-break: break-word;
-  overflow-wrap: anywhere;
-  border-radius: var(--tx-radius-sm);
-  padding: 10px 12px;
-  background: rgba(127,127,127,0.08);
-  border: 1px solid var(--tx-border);
+pre,code,kbd,samp{ font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; }
+pre{
+  white-space:pre-wrap; word-break:break-word; overflow-wrap:anywhere;
+  border-radius:var(--tx-radius-sm); padding:10px 12px;
+  background:rgba(127,127,127,0.08); border:1px solid var(--tx-border);
 }
 
-/* Keyboard focus (visible, tasteful) */
-:focus-visible {
-  outline: var(--tx-focus-outline);
-  outline-offset: 2px;
+/* Focus */
+:focus-visible{ outline:var(--tx-focus-outline); outline-offset:2px; }
+
+/* Sidebar focus */
+:where(aside,.sidebar,nav[aria-label*="Side" i]) :is(a,button,[role="menuitem"],[tabindex]):focus-visible{
+  outline:var(--tx-focus-outline); outline-offset:2px; border-radius:var(--tx-radius-sm);
+  box-shadow:var(--tx-shadow-focus); background:var(--tx-accent-weak);
 }
 
-/* Sidebar keyboard focus ring */
-:where(aside, .sidebar, nav[aria-label*="Side" i]) :is(a, button, [role="menuitem"], [tabindex]):focus-visible {
-  outline: var(--tx-focus-outline);
-  outline-offset: 2px;
-  border-radius: var(--tx-radius-sm);
-  box-shadow: var(--tx-shadow-focus);
-  background: var(--tx-accent-weak);
+/* Command palette */
+[data-cmdk-root]{
+  max-width:720px; background:var(--tx-surface);
+  border:1px solid var(--tx-border); border-radius:var(--tx-radius-lg);
+  box-shadow:0 20px 60px rgba(0,0,0,.45), 0 0 0 1px var(--tx-border);
+}
+[data-cmdk-root] [role="option"]{ border-bottom:1px solid var(--tx-border); }
+[data-cmdk-root] [role="option"]:focus-visible{
+  outline:var(--tx-focus-outline); outline-offset:2px; border-radius:var(--tx-radius-sm);
+  background:var(--tx-accent-weak);
 }
 
-/* Command palette style (like your screenshot) */
-[data-cmdk-root] {
-  max-width: 720px;
-  background: var(--tx-surface);
-  border: 1px solid var(--tx-border);
-  border-radius: var(--tx-radius-lg);
-  box-shadow: 0 20px 60px rgba(0,0,0,.45), 0 0 0 1px var(--tx-border);
-}
-[data-cmdk-root] [role="option"] {
-  border-bottom: 1px solid var(--tx-border);
-}
-[data-cmdk-root] [role="option"]:focus-visible {
-  outline: var(--tx-focus-outline);
-  outline-offset: 2px;
-  border-radius: var(--tx-radius-sm);
-  background: var(--tx-accent-weak);
-}
+/* Scrollbars (WebKit + Firefox) */
+*{ scrollbar-width:thin; scrollbar-color: var(--tx-border) transparent; }
+*::-webkit-scrollbar{ height:10px; width:10px; }
+*::-webkit-scrollbar-thumb{ background:var(--tx-border); border-radius:999px; border:2px solid transparent; background-clip:padding-box; }
+*::-webkit-scrollbar-thumb:hover{ background:var(--tx-border-strong); }
+
+/* Utility spacing */
+.stack > * + *{ margin-top:var(--tx-space-3); }
+.inline-gap{ display:inline-flex; gap:var(--tx-space-2); }
