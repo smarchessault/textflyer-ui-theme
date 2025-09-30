@@ -1,33 +1,80 @@
-/* TextFlyer UI Theme — v0.4.0 (Vercel match) */
+/* TextFlyer UI Theme — v0.5.1 (Clean Modern Design) */
 
-/* ---------- Tokens ---------- */
+/* ---------- Design Tokens ---------- */
 :root{
   /* page + layers */
   --tx-bg: #0e0f12;        /* page background (near-black) */
   --tx-panel:#111317;      /* header/toolbar */
   --tx-card:#16191f;       /* cards/panels */
   --tx-surface:#0f1217;    /* inputs/controls */
+  --tx-hover: rgba(255,255,255,0.04);  /* hover state */
   --tx-border: rgba(255,255,255,0.08);
+  --tx-border-strong: rgba(255,255,255,0.12);
+  --tx-edge-highlight: rgba(255,255,255,0.15); /* top edge glow */
 
   /* text */
   --tx-fg:#e6e7ea;         /* primary text */
   --tx-fg-muted:#a0a4ac;   /* secondary text */
+  --tx-fg-subtle:#6b7280;  /* tertiary text */
 
   /* accent */
   --tx-accent:#0070f3;     /* Vercel blue */
+  --tx-accent-cyan: #00a8ff; /* gradient end */
   --tx-accent-weak: color-mix(in oklab, var(--tx-accent) 6%, transparent);
+  --tx-accent-glow: rgba(0, 112, 243, 0.3); /* glow effect */
 
-  /* radius + spacing + shadows */
+  /* status colors */
+  --tx-success: #10b981;
+  --tx-warning: #f59e0b;
+  --tx-error: #ef4444;
+  --tx-info: #3b82f6;
+
+  /* refined spacing scale */
+  --tx-space-1: 2px;
+  --tx-space-2: 4px;
+  --tx-space-3: 6px;
+  --tx-space-4: 8px;
+  --tx-space-5: 12px;
+  --tx-space-6: 16px;
+  --tx-space-7: 24px;
+  --tx-space-8: 32px;
+  --tx-space-9: 48px;
+  --tx-space-10: 64px;
+
+  /* modern radius */
   --tx-radius-sm: 8px;
   --tx-radius-md: 12px;
-  --tx-space-1: 4px;
-  --tx-space-2: 8px;
-  --tx-space-3: 12px;
-  --tx-space-4: 16px;
-  --tx-space-5: 20px;
-  --tx-space-6: 24px;
-  --tx-shadow-sm: 0 1px 0 rgba(0,0,0,0.6), 0 1px 12px rgba(0,0,0,0.35);
-  --tx-shadow-md: 0 1px 0 rgba(0,0,0,0.6), 0 6px 24px rgba(0,0,0,0.45);
+  --tx-radius-lg: 16px;
+  --tx-radius-xl: 20px;
+
+  /* elevation system (6 levels) */
+  --tx-elevation-0: none;
+  --tx-elevation-1: 
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  --tx-elevation-2: 
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  --tx-elevation-3: 
+    0 8px 24px rgba(0, 0, 0, 0.45),
+    0 4px 8px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+  --tx-elevation-4: 
+    0 16px 48px rgba(0, 0, 0, 0.5),
+    0 8px 16px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.07);
+  --tx-elevation-5: 
+    0 25px 64px rgba(0, 0, 0, 0.6),
+    0 12px 24px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+
+  /* motion */
+  --tx-easing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --tx-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --tx-duration-fast: 150ms;
+  --tx-duration-normal: 300ms;
+  --tx-duration-slow: 500ms;
 }
 
 @media (prefers-color-scheme: light){
@@ -71,13 +118,26 @@ h2{ font-weight: 650; letter-spacing:-0.015em; font-size: clamp(1.35rem, 2.2vw, 
 h3{ font-weight: 600; letter-spacing:-0.01em; font-size: clamp(1.2rem, 1.8vw, 1.35rem); }
 p, li{ color:var(--tx-fg); }
 
-/* ---------- Cards & Panels (no blue surfaces ever) ---------- */
+/* ---------- Modern Cards & Panels ---------- */
 .card, .panel, .box, [data-card], [class*="Card"], [class*="Panel"]{
   background: var(--tx-card) !important;
   color: var(--tx-fg) !important;
   border: 1px solid var(--tx-border) !important;
+  border-top: 1px solid var(--tx-edge-highlight) !important; /* edge highlight */
   border-radius: var(--tx-radius-md) !important;
-  box-shadow: var(--tx-shadow-sm);
+  box-shadow: var(--tx-elevation-2);
+  transition: 
+    transform var(--tx-duration-normal) var(--tx-easing-smooth),
+    box-shadow var(--tx-duration-normal) var(--tx-easing-smooth),
+    border-color var(--tx-duration-fast) var(--tx-easing-smooth);
+}
+
+.card:hover, [data-card]:hover, [class*="Card"]:hover{
+  transform: translateY(-2px);
+  box-shadow: 
+    var(--tx-elevation-3),
+    0 0 24px var(--tx-accent-glow);
+  border-color: var(--tx-border-strong) !important;
 }
 
 /* "stat" tiles */
@@ -88,56 +148,170 @@ p, li{ color:var(--tx-fg); }
   padding: var(--tx-space-4) var(--tx-space-5);
 }
 
-/* Tables */
-table{ width:100%; border-collapse: collapse; }
-th, td{ padding: 10px 12px; border-bottom:1px solid var(--tx-border); }
-thead th{ background: color-mix(in oklab, #000 85%, var(--tx-card)); }
-
-/* Pills/Badges */
-.pill, .badge{
-  display:inline-flex; align-items:center; gap:6px;
-  padding: 4px 10px; border-radius: 999px;
-  background: transparent; border:1px solid var(--tx-border);
+/* ---------- Modern Tables ---------- */
+table{ 
+  width:100%; 
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+th, td{ 
+  padding: 12px 16px; 
+  border-bottom:1px solid var(--tx-border);
+  transition: background var(--tx-duration-fast) ease;
+}
+thead th{ 
+  background: var(--tx-surface);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
   color: var(--tx-fg-muted);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+tbody tr{
+  transition: background var(--tx-duration-fast) ease;
+}
+tbody tr:hover{
+  background: var(--tx-hover);
+}
+tbody tr:nth-child(even){
+  background: rgba(255,255,255,0.01);
+}
+tbody tr:nth-child(even):hover{
+  background: var(--tx-hover);
 }
 
-/* ---------- Buttons ---------- */
+/* ---------- Modern Badges & Pills ---------- */
+.pill, .badge{
+  display:inline-flex; align-items:center; gap:6px;
+  padding: 4px 12px; border-radius: 999px;
+  background: var(--tx-surface);
+  border:1px solid var(--tx-border);
+  color: var(--tx-fg-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all var(--tx-duration-fast) ease;
+}
+.pill:hover, .badge:hover{
+  background: var(--tx-hover);
+  border-color: var(--tx-border-strong);
+}
+
+/* Status badges with colors */
+.badge-success{
+  background: color-mix(in oklab, var(--tx-success) 15%, transparent);
+  border-color: color-mix(in oklab, var(--tx-success) 30%, transparent);
+  color: color-mix(in oklab, var(--tx-success) 110%, #fff);
+}
+.badge-warning{
+  background: color-mix(in oklab, var(--tx-warning) 15%, transparent);
+  border-color: color-mix(in oklab, var(--tx-warning) 30%, transparent);
+  color: color-mix(in oklab, var(--tx-warning) 110%, #fff);
+}
+.badge-error{
+  background: color-mix(in oklab, var(--tx-error) 15%, transparent);
+  border-color: color-mix(in oklab, var(--tx-error) 30%, transparent);
+  color: color-mix(in oklab, var(--tx-error) 110%, #fff);
+}
+.badge-info{
+  background: color-mix(in oklab, var(--tx-info) 15%, transparent);
+  border-color: color-mix(in oklab, var(--tx-info) 30%, transparent);
+  color: color-mix(in oklab, var(--tx-info) 110%, #fff);
+}
+
+/* ---------- Modern Buttons ---------- */
 .btn{ 
   display:inline-flex; align-items:center; justify-content:center; gap:8px;
   padding: 8px 14px; border-radius: var(--tx-radius-sm);
   border:1px solid var(--tx-border); background: transparent; color: var(--tx-fg);
-  box-shadow: none; transition: transform .02s ease, background .12s ease, border-color .12s ease;
+  font-weight: 500;
+  box-shadow: var(--tx-elevation-1); 
+  transition: 
+    transform var(--tx-duration-normal) var(--tx-easing-smooth),
+    background var(--tx-duration-fast) ease,
+    box-shadow var(--tx-duration-normal) var(--tx-easing-smooth),
+    border-color var(--tx-duration-fast) ease;
+  cursor: pointer;
 }
-.btn:hover{ background: color-mix(in oklab, #000 92%, var(--tx-panel)); }
-.btn:active{ transform: translateY(1px); }
+.btn:hover{ 
+  background: var(--tx-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--tx-elevation-2);
+}
+.btn:active{ 
+  transform: translateY(0) scale(0.98); 
+}
 
 .btn-primary{
-  background: var(--tx-accent); border-color: color-mix(in oklab, var(--tx-accent) 60%, #000);
+  background: linear-gradient(135deg, var(--tx-accent) 0%, var(--tx-accent-cyan) 100%);
+  border-color: color-mix(in oklab, var(--tx-accent) 60%, #000);
   color:#fff;
+  box-shadow: 
+    0 4px 12px var(--tx-accent-glow),
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 .btn-primary:hover{
-  background: color-mix(in oklab, var(--tx-accent) 88%, #000);
+  background: linear-gradient(135deg, 
+    color-mix(in oklab, var(--tx-accent) 110%, #fff) 0%, 
+    color-mix(in oklab, var(--tx-accent-cyan) 110%, #fff) 100%);
+  box-shadow: 
+    0 6px 24px var(--tx-accent-glow),
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+  transform: translateY(-2px);
 }
+.btn-primary:active{
+  transform: translateY(0) scale(0.98);
+}
+
 .btn-ghost{
-  background: transparent; border-color: var(--tx-border);
+  background: transparent; 
+  border-color: var(--tx-border);
+  box-shadow: none;
 }
 .btn-ghost:hover{
-  background: var(--tx-accent-weak);
+  background: var(--tx-hover);
+  border-color: var(--tx-border-strong);
 }
 
-/* Inputs */
+/* ---------- Modern Inputs ---------- */
 input, select, textarea{
   background: var(--tx-surface); color: var(--tx-fg);
-  border:1px solid var(--tx-border); border-radius: var(--tx-radius-sm);
-  padding: 8px 10px;
+  border:1px solid var(--tx-border); 
+  border-radius: var(--tx-radius-sm);
+  padding: 8px 12px;
+  transition: 
+    border-color var(--tx-duration-fast) ease,
+    box-shadow var(--tx-duration-normal) var(--tx-easing-smooth),
+    background var(--tx-duration-fast) ease;
 }
 
-/* ---------- Focus (keyboard) ---------- */
+input:hover, select:hover, textarea:hover{
+  border-color: var(--tx-border-strong);
+  background: color-mix(in oklab, var(--tx-surface) 98%, #fff);
+}
+
+input:focus, select:focus, textarea:focus{
+  border-color: var(--tx-accent);
+  background: var(--tx-surface);
+  box-shadow: 
+    0 0 0 3px var(--tx-accent-glow),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+/* ---------- Enhanced Focus States ---------- */
 :focus-visible{
   outline:2px solid var(--tx-accent);
   outline-offset:2px;
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--tx-accent) 30%, transparent);
+  box-shadow: 
+    0 0 0 4px var(--tx-accent-glow),
+    0 0 12px var(--tx-accent-glow);
   border-radius: 8px;
+  transition: box-shadow var(--tx-duration-fast) ease;
 }
 
 /* ---------- External link icon (mask) ---------- */
@@ -161,10 +335,189 @@ a[target="_blank"]:hover::after{ opacity:1; }
 *::-webkit-scrollbar-track{ background: transparent; }
 *::-webkit-scrollbar-thumb{ background: var(--tx-border); border-radius: 999px; }
 
-/* ---------- Hard guard: NEVER allow blue/white card fills ---------- */
-[class*="card"], [class*="Card"], [data-card]{
-  background: var(--tx-card) !important;
+/* ---------- MODALS & OVERLAYS ---------- */
+
+/* Modal backdrop */
+.modal-backdrop, [role="dialog"] + .fixed, .backdrop {
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
-.bg-blue-50, .bg-blue-100, .bg-blue-200, .bg-white {
-  background: var(--tx-card) !important;
+
+/* Modal content */
+.modal, [role="dialog"], .dialog {
+  background: var(--tx-card);
+  border: 1px solid var(--tx-border);
+  box-shadow: var(--tx-elevation-5);
+}
+
+/* Command palette */
+.command-palette, [cmdk-root] {
+  background: var(--tx-card);
+  border: 1px solid var(--tx-border);
+  box-shadow: var(--tx-elevation-4);
+}
+
+/* ---------- MODERN ANIMATIONS & EFFECTS (v0.5.0) ---------- */
+
+/* Skeleton Loading States */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--tx-surface) 0%,
+    color-mix(in oklab, var(--tx-surface) 95%, #fff) 50%,
+    var(--tx-surface) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--tx-radius-sm);
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--tx-duration-normal) var(--tx-easing-smooth);
+}
+
+/* Slide Up Animation */
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp var(--tx-duration-normal) var(--tx-easing-smooth);
+}
+
+/* Stagger Animation (for lists) */
+.stagger-item {
+  animation: slideUp var(--tx-duration-normal) var(--tx-easing-smooth);
+  animation-fill-mode: both;
+}
+
+.stagger-item:nth-child(1) { animation-delay: 0ms; }
+.stagger-item:nth-child(2) { animation-delay: 50ms; }
+.stagger-item:nth-child(3) { animation-delay: 100ms; }
+.stagger-item:nth-child(4) { animation-delay: 150ms; }
+.stagger-item:nth-child(5) { animation-delay: 200ms; }
+.stagger-item:nth-child(6) { animation-delay: 250ms; }
+.stagger-item:nth-child(7) { animation-delay: 300ms; }
+.stagger-item:nth-child(8) { animation-delay: 350ms; }
+
+/* Pulse Animation (for status indicators) */
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.95); }
+}
+
+.animate-pulse {
+  animation: pulse 2s var(--tx-easing-smooth) infinite;
+}
+
+/* Spin Animation (for loaders) */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Glass-morphism Effect */
+.glass {
+  background: color-mix(in oklab, var(--tx-card) 70%, transparent) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--tx-border-strong) !important;
+  box-shadow: 
+    var(--tx-elevation-3),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+/* Gradient Border Effect */
+.gradient-border {
+  position: relative;
+  background: var(--tx-card);
+  border: none !important;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, 
+    var(--tx-accent) 0%, 
+    var(--tx-accent-cyan) 50%, 
+    var(--tx-accent) 100%);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Glow Effect Utilities */
+.glow-accent {
+  box-shadow: 
+    var(--tx-elevation-2),
+    0 0 24px var(--tx-accent-glow),
+    0 0 48px color-mix(in oklab, var(--tx-accent-glow) 50%, transparent);
+}
+
+.glow-success {
+  box-shadow: 
+    var(--tx-elevation-2),
+    0 0 24px color-mix(in oklab, var(--tx-success) 30%, transparent);
+}
+
+/* Noise Texture (subtle depth) */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.02;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
